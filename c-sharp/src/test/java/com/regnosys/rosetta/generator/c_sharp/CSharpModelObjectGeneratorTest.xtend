@@ -103,7 +103,7 @@ class CSharpModelObjectGeneratorTest {
     	val rosettaModels = resourceSet.resources.map[contents.head as RosettaModel]
         val generatedFiles = generator.afterAllGenerate(resourceSet, rosettaModels, "0.0.0")
 
-        val dir =  Paths.get("./target/classes/" + subDirectory + "/Cdm")
+        val dir =  Paths.get("./target/classes/" + subDirectory + "/lizhao")
 
         generatedFiles.forEach [ fileName, contents | 
             { 
@@ -126,21 +126,39 @@ class CSharpModelObjectGeneratorTest {
     }
 
     @Test
-    @Disabled("Test to generate the C# for CDM")
+    //@Disabled("Test to generate the C# for CDM")
     def void generateCdm() {
+<<<<<<< HEAD
         val dirs = #[
             '../../../finos/common-domain-model/rosetta-source/src/main/rosetta',
             '../../rosetta-dsl/rosetta-lang/src/main/resources/model'            
         ]
 		
         val rosettaModels = dirs.parseAllRosettaFiles
+=======
+
+        val dirs = newArrayList(
+            //('rosetta-cdm/src/main/rosetta'),
+            //('rosetta-dsl/com.regnosys.rosetta.lib/src/main/java/model')   
+            ('lizhao')         
+        );
+
+        val resourceSet = resourceSetProvider.get                 
+
+        dirs.map[toFile(it)].map[listFiles[it.name.endsWith('.rosetta')]].flatMap [
+            map[Files.readAllBytes(toPath)].map[new String(it)]
+        ].forEach[parse(resourceSet)]
+
+        val rosettaModels = resourceSet.resources.map[contents.filter(RosettaModel)].flatten.toList
+>>>>>>> 315976d (added samples)
         
         generateCdm(generator8, "NetStandard.2.1", rosettaModels)
         generateCdm(generator9, "Net.5.0", rosettaModels)
     }
     
     def toFile(String s) {
-    	new File(s)
+    	val res = getClass().getClassLoader().getResource(s)
+    	new File(res.toURI())
     }
 
     @Test

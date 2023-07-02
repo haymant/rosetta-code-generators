@@ -19,7 +19,7 @@ class SampleCodeGeneratorTest {
 	@Test
 	void simpleClass() throws Exception {
 		TestHelper<SampleCodeGenerator> helper = new TestHelper<>(new SampleCodeGenerator());
-		URL textModel = Resources.getResource("rosetta/sample.rosetta");
+		URL textModel = Resources.getResource("rosetta/product-enum.rosetta");
 		RosettaModel model = helper.parse(textModel);
 		SampleCodeGenerator generator = helper.getExternalGenerator();
 		Map<String, ? extends CharSequence> files = generator.generate(model.eResource(), model,
